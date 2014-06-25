@@ -5,7 +5,7 @@ HawkBrowser
 <br>
 <br>
 <strong>Default render core:</strong><br>
-  <p text-indent="2cm">Use android system webview.</p><br>
+  <p style="text-indent:2cm">Use android system webview.</p><br>
 <br>  
 <strong>Chromium render core:</strong><br>
   Customize chromium android 33 as an webview.<br>
