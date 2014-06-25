@@ -1,0 +1,466 @@
+diff --git a/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellActivity.java b/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellActivity.java
+index e8215cc..d1c55eb 100644
+--- a/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellActivity.java
++++ b/src/android_webview/test/shell/src/org/chromium/android_webview/shell/AwShellActivity.java
+@@ -32,6 +32,7 @@ import org.chromium.android_webview.AwLayoutSizer;
+ import org.chromium.android_webview.AwSettings;
+ import org.chromium.android_webview.test.AwTestContainerView;
+ import org.chromium.android_webview.test.NullContentsClient;
++import org.chromium.content.browser.ContentViewCore;
+ import org.chromium.content.browser.LoadUrlParams;
+ 
+ /**
+@@ -116,6 +117,20 @@ public class AwShellActivity extends Activity {
+             imm.hideSoftInputFromWindow(mUrlTextView.getWindowToken(), 0);
+         }
+     }
++    
++    @Override
++    public boolean onKeyUp(int keyCode, KeyEvent event) {
++        if (keyCode == KeyEvent.KEYCODE_BACK) {
++            
++            ContentViewCore contentViewCore = mAwTestContainerView.getContentViewCore();
++            if(null != contentViewCore && contentViewCore.canGoBack()) {
++                contentViewCore.goBack();
++                return true;
++            }
++        }
++
++        return super.onKeyUp(keyCode, event);
++    }
+ 
+     private void initializeUrlField() {
+         mUrlTextView = (EditText) findViewById(R.id.url);
+diff --git a/src/chrome/android/testshell/testshell_google_location_settings_helper.cc b/src/chrome/android/testshell/testshell_google_location_settings_helper.cc
+index fe34ec3..c2b98c6 100644
+--- a/src/chrome/android/testshell/testshell_google_location_settings_helper.cc
++++ b/src/chrome/android/testshell/testshell_google_location_settings_helper.cc
+@@ -6,29 +6,29 @@
+ 
+ // Factory function
+ GoogleLocationSettingsHelper* GoogleLocationSettingsHelper::Create() {
+-  return new TestShellGoogleLocationSettingsHelper();
++  return new HawkBrowserGoogleLocationSettingsHelper();
+ }
+ 
+-TestShellGoogleLocationSettingsHelper::TestShellGoogleLocationSettingsHelper()
++HawkBrowserGoogleLocationSettingsHelper::HawkBrowserGoogleLocationSettingsHelper()
+     : GoogleLocationSettingsHelper() {
+ }
+ 
+-TestShellGoogleLocationSettingsHelper::
+-    ~TestShellGoogleLocationSettingsHelper() {
++HawkBrowserGoogleLocationSettingsHelper::
++    ~HawkBrowserGoogleLocationSettingsHelper() {
+ }
+ 
+-std::string TestShellGoogleLocationSettingsHelper::GetAcceptButtonLabel() {
++std::string HawkBrowserGoogleLocationSettingsHelper::GetAcceptButtonLabel() {
+   return "Allow";
+ }
+ 
+-void TestShellGoogleLocationSettingsHelper::ShowGoogleLocationSettings() {
++void HawkBrowserGoogleLocationSettingsHelper::ShowGoogleLocationSettings() {
+ }
+ 
+-bool TestShellGoogleLocationSettingsHelper::
++bool HawkBrowserGoogleLocationSettingsHelper::
+     IsGoogleAppsLocationSettingEnabled() {
+   return true;
+ }
+ 
+-bool TestShellGoogleLocationSettingsHelper::IsMasterLocationSettingEnabled() {
++bool HawkBrowserGoogleLocationSettingsHelper::IsMasterLocationSettingEnabled() {
+   return true;
+ }
+diff --git a/src/chrome/android/testshell/testshell_google_location_settings_helper.h b/src/chrome/android/testshell/testshell_google_location_settings_helper.h
+index 5b2cdcc..a730e78 100644
+--- a/src/chrome/android/testshell/testshell_google_location_settings_helper.h
++++ b/src/chrome/android/testshell/testshell_google_location_settings_helper.h
+@@ -8,7 +8,7 @@
+ #include "chrome/browser/android/google_location_settings_helper.h"
+ 
+ // Stub implementation of GoogleLocationSettingsHelper for testshell.
+-class TestShellGoogleLocationSettingsHelper
++class HawkBrowserGoogleLocationSettingsHelper
+     : public GoogleLocationSettingsHelper {
+  public:
+   // GoogleLocationSettingsHelper implementation:
+@@ -18,13 +18,13 @@ class TestShellGoogleLocationSettingsHelper
+   virtual bool IsGoogleAppsLocationSettingEnabled() OVERRIDE;
+ 
+  protected:
+-  TestShellGoogleLocationSettingsHelper();
+-  virtual ~TestShellGoogleLocationSettingsHelper();
++  HawkBrowserGoogleLocationSettingsHelper();
++  virtual ~HawkBrowserGoogleLocationSettingsHelper();
+ 
+  private:
+   friend class GoogleLocationSettingsHelper;
+ 
+-  DISALLOW_COPY_AND_ASSIGN(TestShellGoogleLocationSettingsHelper);
++  DISALLOW_COPY_AND_ASSIGN(HawkBrowserGoogleLocationSettingsHelper);
+ };
+ 
+ #endif  // CHROME_ANDROID_TESTSHELL_TESTSHELL_GOOGLE_LOCATION_SETTINGS_HELPER_H_
+diff --git a/src/chrome/browser/chrome_content_browser_client.cc b/src/chrome/browser/chrome_content_browser_client.cc
+index 172aa39..d9e949f 100644
+--- a/src/chrome/browser/chrome_content_browser_client.cc
++++ b/src/chrome/browser/chrome_content_browser_client.cc
+@@ -170,6 +170,9 @@
+ #include "chrome/browser/media/encrypted_media_message_filter_android.h"
+ #include "chrome/common/descriptors_android.h"
+ #include "components/breakpad/browser/crash_dump_manager_android.h"
++// add by chenzhuo
++#include "content/browser/android/content_settings.h"
++//
+ #elif defined(OS_POSIX)
+ #include "chrome/browser/chrome_browser_main_posix.h"
+ #endif
+@@ -2206,6 +2209,7 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
+ 
+   web_prefs->javascript_can_open_windows_automatically =
+       prefs->GetBoolean(prefs::kWebKitJavascriptCanOpenWindowsAutomatically);
++
+   web_prefs->dom_paste_enabled =
+       prefs->GetBoolean(prefs::kWebKitDomPasteEnabled);
+   web_prefs->shrinks_standalone_images_to_fit =
+@@ -2255,6 +2259,9 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
+ #if defined(OS_ANDROID)
+   web_prefs->password_echo_enabled =
+       prefs->GetBoolean(prefs::kWebKitPasswordEchoEnabled);
++  // add by chenzhuo
++  web_prefs->supports_multiple_windows = false;
++  //
+ #else
+   web_prefs->password_echo_enabled = browser_defaults::kPasswordEchoEnabled;
+ #endif
+@@ -2315,6 +2322,14 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
+     web_prefs->accelerated_2d_canvas_enabled = true;
+   }
+ #endif
++
++  // add by chenzhuo
++  content::ContentSettings* content_settings =
++		  content::ContentSettings::FromWebContents(web_contents);
++  if (content_settings) {
++	  content_settings->PopulateWebPreferences(web_prefs);
++  }
++  //
+ }
+ 
+ void ChromeContentBrowserClient::UpdateInspectorSetting(
+diff --git a/src/chrome/chrome_android.gypi b/src/chrome/chrome_android.gypi
+index 7de1386..1f09b6e 100644
+--- a/src/chrome/chrome_android.gypi
++++ b/src/chrome/chrome_android.gypi
+@@ -50,6 +50,44 @@
+       ],
+     },
+     {
++      'target_name': 'libchromiumhawkbrowser',
++      'type': 'shared_library',
++      'dependencies': [
++        '../base/base.gyp:base',
++        'chrome_android_core',
++        'chrome.gyp:browser_ui',
++        '../content/content.gyp:content_app_browser',
++      ],
++      'sources': [
++        # This file must always be included in the shared_library step to ensure
++        # JNI_OnLoad is exported.
++        'app/android/chrome_jni_onload.cc',
++        'android/hawkbrowser/chrome_main_delegate_hawkbrowser_android.cc',
++        'android/hawkbrowser/chrome_main_delegate_hawkbrowser_android.h',
++        "android/hawkbrowser/hawkbrowser_google_location_settings_helper.cc",
++        "android/hawkbrowser/hawkbrowser_google_location_settings_helper.h",
++        'android/hawkbrowser/hawkbrowser_tab.cc',
++        'android/hawkbrowser/hawkbrowser_tab.h',
++      ],
++      'include_dirs': [
++        '../skia/config',
++        '<(SHARED_INTERMEDIATE_DIR)/chrome',
++      ],
++      'conditions': [
++        [ 'order_profiling!=0', {
++          'conditions': [
++            [ 'OS=="android"', {
++              'dependencies': [ '../tools/cygprofile/cygprofile.gyp:cygprofile', ],
++            }],
++          ],
++        }],
++        [ 'android_use_tcmalloc==1', {
++          'dependencies': [
++            '../base/allocator/allocator.gyp:allocator', ],
++        }],
++      ],
++    },
++    {
+       'target_name': 'chromium_testshell',
+       'type': 'none',
+       'dependencies': [
+@@ -73,6 +111,29 @@
+       'includes': [ '../build/java_apk.gypi', ],
+     },
+     {
++      'target_name': 'hawkbrowsertestshell',
++      'type': 'none',
++      'dependencies': [
++        '../media/media.gyp:media_java',
++        'chrome.gyp:chrome_java',
++        'chromium_testshell_paks',
++        'libchromiumhawkbrowser',
++      ],
++      'variables': {
++        'apk_name': 'HawkBrowserTestShell',
++        'manifest_package_name': 'com.hawkbrowser.testshell',
++        'java_in_dir': 'android/hawkbrowser/testshell/java',
++        'resource_dir': 'android/hawkbrowser/testshell/res',
++        'asset_location': '<(PRODUCT_DIR)/../assets/<(package_name)',
++        'native_lib_target': 'libchromiumhawkbrowser',
++        'native_lib_version_name': '<(version_full)',
++        'additional_input_paths': [
++          '<@(chrome_android_pak_output_resources)',
++        ],
++      },
++      'includes': [ '../build/java_apk.gypi', ],
++    },
++    {
+       'target_name': 'chromium_testshell_jni_headers',
+       'type': 'none',
+       'sources': [
+diff --git a/src/chrome/chrome_browser.gypi b/src/chrome/chrome_browser.gypi
+index 7cc1727..aded405 100644
+--- a/src/chrome/chrome_browser.gypi
++++ b/src/chrome/chrome_browser.gypi
+@@ -3589,7 +3589,8 @@
+             'android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java',
+             'android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java',
+             'android/java/src/org/chromium/chrome/browser/infobar/TranslateInfoBarDelegate.java',
+-            'android/java/src/org/chromium/chrome/browser/invalidation/InvalidationController.java'
++            'android/java/src/org/chromium/chrome/browser/invalidation/InvalidationController.java',
++            'android/java/src/org/chromium/chrome/hawkbrowser/HawkBrowserTab.java'
+           ],
+           'variables': {
+             'jni_gen_package': 'chrome',
+diff --git a/src/content/browser/android/content_settings.cc b/src/content/browser/android/content_settings.cc
+index 7c6407f..77f36d0 100644
+--- a/src/content/browser/android/content_settings.cc
++++ b/src/content/browser/android/content_settings.cc
+@@ -12,16 +12,51 @@
+ #include "jni/ContentSettings_jni.h"
+ #include "webkit/common/webpreferences.h"
+ 
++// add by chenzhuo
++#include "webkit/common/webpreferences.h"
++//
++
+ namespace content {
+ 
++// add by chenzhuo
++const void* kContentSettingsUserDataKey = &kContentSettingsUserDataKey;
++
++class ContentSettingsUserData : public base::SupportsUserData::Data {
++ public:
++	ContentSettingsUserData(ContentSettings* ptr) : settings_(ptr) {}
++
++  static ContentSettings* GetSettings(content::WebContents* web_contents) {
++    if (!web_contents)
++      return NULL;
++    ContentSettingsUserData* data = reinterpret_cast<ContentSettingsUserData*>(
++        web_contents->GetUserData(kContentSettingsUserDataKey));
++    return data ? data->settings_ : NULL;
++  }
++
++ private:
++  ContentSettings* settings_;
++};
++// add by chenzhuo end
++
+ ContentSettings::ContentSettings(JNIEnv* env,
+                          jobject obj,
+                          WebContents* contents)
+     : WebContentsObserver(contents),
+       content_settings_(env, obj) {
++
++	// add by chenzhuo
++	contents->SetUserData(kContentSettingsUserDataKey, new ContentSettingsUserData(this));
++	// add by chenzhuo end
+ }
+ 
+ ContentSettings::~ContentSettings() {
++
++  // add by chenzhuo
++  if (web_contents()) {
++	web_contents()->SetUserData(kContentSettingsUserDataKey, NULL);
++  }
++  //
++
+   JNIEnv* env = base::android::AttachCurrentThread();
+   ScopedJavaLocalRef<jobject> obj = content_settings_.get(env);
+   if (obj.obj()) {
+@@ -55,4 +90,41 @@ static jlong Init(JNIEnv* env, jobject obj, jlong nativeContentViewCore) {
+   return reinterpret_cast<intptr_t>(content_settings);
+ }
+ 
++// add by chenzhuo
++void ContentSettings::UpdateWebkitPreferences(JNIEnv* env, jobject obj) {
++
++  content::RenderViewHost* render_view_host =
++	  web_contents()->GetRenderViewHost();
++
++  if (!render_view_host) return;
++
++  render_view_host->UpdateWebkitPreferences(
++	  render_view_host->GetWebkitPreferences());
++}
++
++void ContentSettings::PopulateWebPreferences(WebPreferences* web_prefs) {
++
++  JNIEnv* env = base::android::AttachCurrentThread();
++
++  CHECK(env);
++
++  ScopedJavaLocalRef<jobject> scoped_obj = content_settings_.get(env);
++  jobject obj = scoped_obj.obj();
++
++  if (!obj) return;
++
++  // Blink's LoadsImagesAutomatically and ImagesEnabled must be
++  // set cris-cross to Android's. See
++  // https://code.google.com/p/chromium/issues/detail?id=224317#c26
++  web_prefs->loads_images_automatically =
++      Java_ContentSettings_getImagesEnabled(env, obj);
++  web_prefs->images_enabled =
++      Java_ContentSettings_getLoadsImagesAutomatically(env, obj);
++}
++
++ContentSettings* ContentSettings::FromWebContents(content::WebContents* web_contents) {
++  return ContentSettingsUserData::GetSettings(web_contents);
++}
++// add by chenzhuo end
++
+ }  // namespace content
+diff --git a/src/content/browser/android/content_settings.h b/src/content/browser/android/content_settings.h
+index 5c0f9a0..1020d30 100644
+--- a/src/content/browser/android/content_settings.h
++++ b/src/content/browser/android/content_settings.h
+@@ -10,6 +10,10 @@
+ #include "base/android/jni_helper.h"
+ #include "content/public/browser/web_contents_observer.h"
+ 
++// add by chenzhuo
++struct WebPreferences;
++//
++
+ namespace content {
+ 
+ class ContentSettings : public WebContentsObserver {
+@@ -17,9 +21,15 @@ class ContentSettings : public WebContentsObserver {
+   ContentSettings(JNIEnv* env, jobject obj,
+                   WebContents* contents);
+ 
++  // add by chenzhuo
++  static ContentSettings* FromWebContents(content::WebContents* web_contents);
++  void PopulateWebPreferences(WebPreferences* web_prefs);
++  //
++
+   static bool RegisterContentSettings(JNIEnv* env);
+ 
+   bool GetJavaScriptEnabled(JNIEnv* env, jobject obj);
++  void UpdateWebkitPreferences(JNIEnv* env, jobject obj);
+ 
+  private:
+   // Self-deletes when the underlying WebContents is destroyed.
+diff --git a/src/content/content_shell.gypi b/src/content/content_shell.gypi
+index c4ef442..f3cd0f3 100644
+--- a/src/content/content_shell.gypi
++++ b/src/content/content_shell.gypi
+@@ -808,7 +808,19 @@
+             }],
+           ],
+           'includes': [ '../build/java_apk.gypi' ],
++
+         },
++        {
++          'target_name' : 'chrome_java_test',
++          'type': 'none',
++          'variables' : {
++            'apk_name': 'ChromeJavaTest',
++            'manifest_package_name': 'com.example.chrome_java_test',
++            'java_in_dir': 'shell/android/chrome_java_test',
++            'resource_dir': 'shell/android/chrome_java_test/res',
++          },
++          'includes': [ '../build/java_apk.gypi' ],
++        }
+       ],
+     }],  # OS=="android"
+     ['OS=="win"', {
+diff --git a/src/content/public/android/java/src/org/chromium/content/browser/ContentSettings.java b/src/content/public/android/java/src/org/chromium/content/browser/ContentSettings.java
+index f8f0942..388cc10 100644
+--- a/src/content/public/android/java/src/org/chromium/content/browser/ContentSettings.java
++++ b/src/content/public/android/java/src/org/chromium/content/browser/ContentSettings.java
+@@ -22,6 +22,11 @@ public class ContentSettings {
+     private long mNativeContentSettings = 0;
+ 
+     private ContentViewCore mContentViewCore;
++    
++    // add by chenzhuo
++    private boolean mImagesEnabled = true;
++    private boolean mLoadsImagesAutomatically = true;
++    //
+ 
+     /**
+      * Package constructor to prevent clients from creating a new settings
+@@ -54,6 +59,34 @@ public class ContentSettings {
+         return mNativeContentSettings != 0 ?
+                 nativeGetJavaScriptEnabled(mNativeContentSettings) : false;
+     }
++    
++    // add by chenzhuo
++    public void setLoadsImagesAutomatically(boolean flag) {
++        if (mLoadsImagesAutomatically != flag) {
++            mLoadsImagesAutomatically = flag;
++            nativeUpdateWebkitPreferences(mNativeContentSettings);
++        }
++    }
++    
++    public void setImagesEnabled(boolean flag) {
++        if (mImagesEnabled != flag) {
++            mImagesEnabled = flag;
++            nativeUpdateWebkitPreferences(mNativeContentSettings);
++        }
++    }
++    
++    @CalledByNative
++    public boolean getImagesEnabled() {
++        return mImagesEnabled;
++    }
++    
++    @CalledByNative
++    public boolean getLoadsImagesAutomatically() {
++        return mLoadsImagesAutomatically;
++    }
++    
++    private native void nativeUpdateWebkitPreferences(long nativeContentSettings);
++    // add by chenzhuo end
+ 
+     // Initialize the ContentSettings native side.
+     private native long nativeInit(long contentViewPtr);
+diff --git a/src/content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java b/src/content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java
+index 797d872..63b2102 100644
+--- a/src/content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java
++++ b/src/content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java
+@@ -229,6 +229,12 @@ public class ContentViewRenderView extends FrameLayout {
+             }
+         };
+     }
++    
++    // add by chenzhuo
++    public void compositeToBitmap(Bitmap bitmap) {
++        nativeCompositeToBitmap(mNativeContentViewRenderView, bitmap);
++    }
++    //
+ 
+     /**
+      * @return whether the surface view is initialized and ready to render.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:padding="5.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView android:id="@id/js_modal_dialog_scroll_view" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginTop="5.0dip" android:layout_marginBottom="5.0dip" android:layout_weight="1.0" android:layout_marginStart="10.0dip">
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:layout_gravity="start" android:id="@id/js_modal_dialog_message" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </ScrollView>
+    <EditText android:id="@id/js_modal_dialog_prompt" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:singleLine="true" android:contentDescription="@string/accessibility_js_modal_dialog_prompt" />
+    <CheckBox android:textAppearance="?android:textAppearanceSmall" android:layout_gravity="start" android:id="@id/suppress_js_modal_dialogs" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/suppress_js_modal_dialogs" />
+</LinearLayout>

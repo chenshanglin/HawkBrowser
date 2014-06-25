@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_menubar_left"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="fill"
+    android:orientation="horizontal" >
+
+    <TableRow
+        android:id="@+id/popup_menubar_left_row1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/popup_menubar_margin" >
+
+        <Button
+            android:id="@+id/popup_menubar_addbookmark"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_addbookmark_n"
+            android:text="@string/addbookmark"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_bookmark"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_bookmark_n"
+            android:text="@string/bookmark"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_history"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_history_n"
+            android:text="@string/history"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_refresh"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_refresh_n"
+            android:text="@string/refresh"
+            android:textSize="@dimen/popup_menubar_textsize" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/popup_menubar_left_row2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/popup_menubar_margin" >
+
+		<Button
+            android:id="@+id/popup_menubar_personalcenter"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_usercenter_n"
+            android:text="@string/personal_center"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_download"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_download_n"
+            android:text="@string/download"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_share"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_share_n"
+            android:text="@string/share"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_exit"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_exit_n"
+            android:text="@string/exit"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+    </TableRow>
+
+</TableLayout>

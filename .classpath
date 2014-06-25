@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="libs/base_java.jar"/>
+	<classpathentry kind="lib" path="libs/chrome_java.jar"/>
+	<classpathentry kind="lib" path="libs/media_java.jar"/>
+	<classpathentry kind="lib" path="libs/navigation_interception_java.jar"/>
+	<classpathentry kind="lib" path="libs/net_java.jar"/>
+	<classpathentry kind="lib" path="libs/ui_java.jar"/>
+	<classpathentry kind="lib" path="libs/web_contents_delegate_android_java.jar"/>
+	<classpathentry kind="lib" path="libs/printing_java.jar"/>
+	<classpathentry kind="lib" path="libs/sync_java.jar"/>
+	<classpathentry kind="lib" path="libs/autofill_java.jar"/>
+	<classpathentry kind="lib" path="libs/content_java.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

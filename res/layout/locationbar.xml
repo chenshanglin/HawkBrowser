@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+	<LinearLayout
+	    android:id="@+id/locationbar_top"
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/location_bar_height"
+		android:background="@color/location_bar_bg"
+	    android:orientation="horizontal" >
+	
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginLeft="@dimen/location_bar_margin_horizontal"
+	        android:layout_marginRight="@dimen/location_bar_margin_horizontal"
+	        android:layout_marginTop="@dimen/location_bar_margin_top"
+	        android:layout_marginBottom="@dimen/location_bar_margin_bottom"
+	        android:layout_weight="1"
+	        android:background="@color/location_bar_bg"
+	        android:orientation="horizontal" >
+	
+	        <EditText
+	            android:id="@+id/locationbar_input"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:background="@color/day_mode_bg_default"
+	            android:layout_centerVertical="true"
+	            android:hint="@string/address_input_hint"
+				android:singleLine="true"
+	            android:selectAllOnFocus="true"
+	            android:inputType="textUri"
+	            android:imeOptions="actionGo"
+	            android:paddingRight="@dimen/address_input_padding_right"
+	            android:paddingLeft="@dimen/address_input_padding_left" >
+	        </EditText>
+	
+	        <ImageView
+	            android:id="@+id/locationbar_search"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/locationbar_input"
+	            android:layout_marginLeft="@dimen/address_input_left_margin"
+	            android:layout_centerVertical="true"
+	            android:contentDescription="@string/search"
+	            android:src="@drawable/ic_menu_search_holo_light" />
+	
+	        <LinearLayout
+	            android:id="@+id/locationbar_rightzone"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:visibility="gone"
+	            android:layout_alignRight="@id/locationbar_input"
+	            android:layout_margin="@dimen/address_input_margin" >
+	
+	            <ImageView
+	                android:id="@+id/locationbar_qrcode"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:contentDescription="@string/scan_qrcode"
+	                android:src="@drawable/locationbar_qrcode" />
+	
+	            <Spinner
+	                android:layout_width="1dp"
+	                android:layout_height="20dp"
+	                android:layout_gravity="center"
+	                android:background="@color/location_bar_bg"
+	                android:orientation="vertical" />
+	
+	            <ImageView
+	                android:id="@+id/locationbar_speak"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:contentDescription="@string/speak_search"
+	                android:src="@android:drawable/ic_btn_speak_now" />
+	        </LinearLayout>
+	
+	        <ImageView
+	            android:id="@+id/locationbar_clear_input"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignRight="@id/locationbar_input"
+	            android:background="@drawable/locationbar_btn_bg"
+	            android:contentDescription="@string/clear_input"
+	            android:src="@drawable/locationbar_clear"
+	            android:layout_gravity="center"
+	            android:layout_margin="@dimen/address_input_margin"
+	            android:visibility="visible" />
+	
+	    </RelativeLayout>
+	
+	    <TextView
+	        android:id="@+id/locationbar_action"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_marginRight="@dimen/location_bar_margin_horizontal"
+	        android:layout_weight="0"
+	        android:visibility="gone"
+	        android:text="@string/cancel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <ImageView
+	        android:id="@+id/locationbar_cancel_refresh"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_marginRight="@dimen/location_bar_margin_horizontal"
+	        android:layout_weight="0"
+	        android:visibility="visible"
+	        android:contentDescription="@string/refresh_cancel"
+	        android:background="@drawable/locationbar_btn_bg"
+	        android:src="@drawable/locationbar_refresh" />
+	</LinearLayout>	    
+    
+	<ProgressBar
+         android:id="@+id/locationbar_progressbar"
+         style="?android:attr/progressBarStyleHorizontal"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/locationbar_progressbar_height"
+         android:max="@integer/locationbar_progressbar_max"
+         android:progressDrawable="@drawable/locationbar_progressbar_layer"
+         android:progress="0"
+         android:visibility="visible"
+         />
+
+</LinearLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_menubar_right"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="fill"
+    android:orientation="horizontal" >
+
+    <TableRow
+        android:id="@+id/popmenu_menubar_right_row1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/popup_menubar_margin" >
+
+        <Button
+            android:id="@+id/popup_menubar_setting"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_setting_n"
+            android:text="@string/setting"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_nightmode"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_nightmode_n"
+            android:text="@string/night_mode"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_noimage"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_noimage_n"
+            android:text="@string/imageless_mode"
+            android:textSize="@dimen/popup_menubar_textsize" />
+
+        <Button
+            android:id="@+id/popup_menubar_fullscreen"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_enterfullscreen_n"
+            android:text="@string/fullscreen"
+            android:textSize="@dimen/popup_menubar_textsize" />
+    </TableRow>
+    
+	<TableRow
+        android:id="@+id/popmenu_menubar_right_row2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/popup_menubar_margin" >
+
+        <Button
+            android:id="@+id/popup_menubar_file"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_file_n"
+            android:text="@string/file"
+            android:textSize="@dimen/popup_menubar_textsize" />
+        
+		<Button
+            android:id="@+id/popup_menubar_render"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_systemrender"
+            android:text="@string/system_render"
+            android:textSize="@dimen/popup_menubar_textsize" />
+		
+		<Button
+		    android:id="@+id/popup_menubar_incognito"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+			android:background="@drawable/popup_menubar_btn_bg"
+            android:drawableTop="@drawable/popup_menubar_incognito_n"
+            android:layout_weight="1"
+            android:text="@string/incognito"
+            android:textSize="@dimen/popup_menubar_textsize" />
+		
+		<Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:layout_weight="1" />
+    </TableRow>
+    
+</TableLayout>

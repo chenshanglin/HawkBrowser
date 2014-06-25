@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="default_thumbnail_cache_size">5</integer>
+    <integer name="default_approximation_thumbnail_cache_size">32</integer>
+    <integer name="default_write_queue_size">5</integer>
+    <integer name="default_compression_queue_size">5</integer>
+    <integer name="select_bookmark_folder_max_depth_indent">5</integer>
+    <integer name="over_scroll_angle">15</integer>
+    <integer name="fre_long_duration_ms">750</integer>
+    
+    <!-- new add -->
+    <integer name="locationbar_progressbar_max">100</integer>
+    <integer name="popup_menubar_animation_time">300</integer>
+    
+</resources>

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:textSize="@dimen/infobar_text_size" android:textColor="@color/infobar_text" android:id="@id/infobar_message" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/infobar_margin" android:layout_marginBottom="@dimen/infobar_margin" android:textDirection="locale"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

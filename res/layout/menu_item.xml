@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="?android:selectableItemBackground" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="?android:textAppearanceLargePopupMenu" android:gravity="center_vertical" android:layout_gravity="start" android:id="@id/menu_item_text" android:paddingLeft="9.0dip" android:paddingRight="9.0dip" android:layout_width="wrap_content" android:layout_height="?android:listPreferredItemHeightSmall" android:singleLine="true" android:layout_weight="1.0" />
+    <view android:gravity="center_vertical" android:layout_gravity="end" android:id="@id/menu_item_icon" android:paddingRight="8.0dip" android:layout_width="wrap_content" android:layout_height="?android:listPreferredItemHeightSmall" android:layout_weight="0.0" class="org.chromium.chrome.browser.appmenu.AppMenu$MenuItemIcon" />
+</LinearLayout>

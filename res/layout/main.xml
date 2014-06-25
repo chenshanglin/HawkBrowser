@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <com.hawkbrowser.browser.ui.LocationBar 
+		android:id="@+id/locationbar"       
+		android:layout_weight="0" 	
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"/>
+    
+    
+	<com.hawkbrowser.render.RenderViewHolder 
+	    android:id="@+id/renderview_holder"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="1"
+	    />
+	
+	<Spinner
+   	    android:id="@+id/bottom_spinner"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="0.5dip"
+   	    android:background="@android:color/black" />
+    
+	<com.hawkbrowser.browser.ui.Toolbar
+	    android:id="@+id/toolbar"
+	    android:layout_weight="0"
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+		
+</LinearLayout>

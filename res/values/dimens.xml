@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="color_picker_gradient_margin">14.5dip</dimen>
+    <dimen name="color_button_height">60.0dip</dimen>
+    <dimen name="autofill_text_height">44.0dip</dimen>
+    <dimen name="autofill_text_divider_height">1.0px</dimen>
+    <dimen name="infobar_text_size">16.0sp</dimen>
+    <dimen name="infobar_button_text_size">16.0sp</dimen>
+    <dimen name="infobar_min_size">60.0dip</dimen>
+    <dimen name="infobar_margin">10.0dip</dimen>
+    <dimen name="infobar_button_horizontal_padding">30.0dip</dimen>
+    <dimen name="infobar_touch_target_height">40.0dip</dimen>
+    <dimen name="infobar_icon_size">31.0dip</dimen>
+    <dimen name="link_preview_overlay_radius">7.0dip</dimen>
+    <dimen name="certificate_viewer_padding">20.0dip</dimen>
+    <dimen name="menu_item_divider_width">1.0px</dimen>
+    <dimen name="menu_width">257.0dip</dimen>
+    <dimen name="menu_vertical_offset">0.0px</dimen>
+    <dimen name="menu_vertical_fade_distance">15.0dip</dimen>
+    <dimen name="auto_scroll_full_velocity">500.0dip</dimen>
+    <dimen name="edge_swipe_in_slop">25.0dip</dimen>
+    <dimen name="edge_swipe_in_additional_slop">50.0dip</dimen>
+    <dimen name="edge_swipe_out_slop">18.0dip</dimen>
+    
+    <!-- new add -->
+    <dimen name="location_bar_height">50.0dip</dimen>
+    <dimen name="location_bar_margin_horizontal">10.0dip</dimen>
+    <dimen name="location_bar_margin_top">7.0dip</dimen>
+    <dimen name="location_bar_margin_bottom">7.0dip</dimen>
+    <dimen name="address_input_margin">5.0dip</dimen>
+    <dimen name="address_input_padding_left">35.0dip</dimen>
+    <dimen name="address_input_padding_right">35.0dip</dimen>
+    <dimen name="address_input_padding_vertical">5.0dip</dimen>
+    <dimen name="address_input_left_margin">3.0dip</dimen>
+    <dimen name="locationbar_progressbar_height">2dp</dimen>
+    <dimen name="toolbar_height">50.0dip</dimen>
+    <dimen name="toolbar_btn_width">40.0dip</dimen>
+    <dimen name="popup_menubar_margin">8dip</dimen>
+    <dimen name="popup_menubar_textsize">12.0sp</dimen>
+    <dimen name="popup_menubar_btn_width">85.0dip</dimen>
+    <dimen name="popup_menubar_btn_height">50.0dip</dimen>
+    <dimen name="popup_menubar_height">140dp</dimen>
+    
+</resources>

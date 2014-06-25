@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="start|top|center" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="?android:listPreferredItemHeightSmall">
+        <ImageButton android:id="@id/menu_item_back" android:background="?android:selectableItemBackground" android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="@drawable/back_button_selector" android:scaleType="center" android:layout_weight="1.0" android:contentDescription="@string/accessibility_menu_back" />
+        <View android:background="?android:listDivider" android:layout_width="@dimen/menu_item_divider_width" android:layout_height="fill_parent" android:layout_marginBottom="@dimen/menu_item_divider_width" />
+        <ImageButton android:id="@id/menu_item_forward" android:background="?android:selectableItemBackground" android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="@drawable/forward_button_selector" android:scaleType="center" android:layout_weight="1.0" android:contentDescription="@string/accessibility_menu_forward" />
+        <View android:background="?android:listDivider" android:layout_width="@dimen/menu_item_divider_width" android:layout_height="fill_parent" android:layout_marginBottom="@dimen/menu_item_divider_width" />
+        <ImageButton android:id="@id/menu_item_bookmark" android:background="?android:selectableItemBackground" android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="@drawable/star" android:scaleType="center" android:layout_weight="1.0" android:contentDescription="@string/accessibility_menu_bookmark" />
+    </LinearLayout>
+    <View android:layout_gravity="start|bottom|center" android:background="?android:listDivider" android:layout_width="fill_parent" android:layout_height="@dimen/menu_item_divider_width" />
+</FrameLayout>

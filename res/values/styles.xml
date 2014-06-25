@@ -1,0 +1,33 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="MainTheme.day" parent="android:Theme.Light.NoTitleBar">
+        <!-- 
+        <item name="locationbar_background">@color/location_bar_bg</item>
+        <item name="locationbar_input_background">@android:color/white</item>
+        <item name="popupmenubar_background">@android:color/white</item>
+         -->
+    </style>
+    
+	<style name="MainTheme.night" parent="android:Theme.Light.NoTitleBar">
+	    <!-- 
+        <item name="locationbar_background">@android:color/background_dark</item>
+        <item name="locationbar_input_background">@android:color/background_dark</item>
+        <item name="popupmenubar_background">@android:color/background_dark</item>
+        <item name="android:background">@android:color/background_dark</item>
+         -->
+    </style>
+
+</resources>

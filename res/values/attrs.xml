@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="select_dialog_multichoice" format="reference" />
+    <attr name="select_dialog_singlechoice" format="reference" />
+    
+    <!-- new added -->
+    <!-- 
+	<attr name="locationbar_background" format="reference" />
+	<attr name="locationbar_input_background" format="reference" />
+	<attr name="popupmenubar_background" format="reference" />
+	 -->
+     
+</resources>

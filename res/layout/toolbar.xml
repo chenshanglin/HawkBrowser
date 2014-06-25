@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:orientation="horizontal" >
+    
+	<ImageButton
+       android:id="@+id/toolbar_back"
+       style="?android:attr/textAppearanceMedium"
+       android:layout_width="@dimen/toolbar_btn_width"
+       android:layout_height="match_parent"
+       android:layout_weight="1"
+       android:background="@drawable/toolbar_btn_bg"
+       android:contentDescription="@string/back"
+       android:enabled="false"
+       android:src="@drawable/toobar_back_button" />
+
+   <ImageButton
+       android:id="@+id/toolbar_forward"
+       style="?android:attr/textAppearanceMedium"
+       android:layout_width="@dimen/toolbar_btn_width"
+       android:layout_height="match_parent"
+       android:layout_weight="1"
+       android:enabled="false"
+       android:background="@drawable/toolbar_btn_bg"
+       android:src="@drawable/toolbar_forward_button"
+       android:contentDescription="@string/forward" />
+
+   <ImageButton
+       android:id="@+id/toolbar_menu"
+       style="?android:attr/textAppearanceMedium"
+       android:layout_width="@dimen/toolbar_btn_width"
+       android:layout_height="match_parent"
+       android:layout_weight="1"
+       android:contentDescription="@string/menu"
+       android:background="@drawable/toolbar_btn_bg"
+       android:src="@drawable/toolbar_menu_normal" />
+
+   <ImageButton
+       android:id="@+id/toolbar_home"
+       style="?android:attr/textAppearanceMedium"
+       android:layout_width="@dimen/toolbar_btn_width"
+       android:layout_height="match_parent"
+       android:layout_weight="1"
+       android:background="@drawable/toolbar_btn_bg"
+       android:src="@drawable/toolbar_home_normal"
+       android:contentDescription="@string/home" />
+   
+  	<FrameLayout
+  	   android:id="@+id/toolbar_selectview"
+       android:layout_width="@dimen/toolbar_btn_width"
+       android:layout_height="match_parent"
+       android:clickable="true"
+       android:layout_weight="1" >
+       
+  	   	<ImageButton
+        android:id="@+id/toolbar_selectwindow_img"
+        style="?android:attr/textAppearanceMedium"
+        android:clickable="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/toolbar_btn_bg"
+        android:src="@drawable/toolbar_multi_normal"
+        android:contentDescription="@string/selectwindow" />
+
+  	   	<TextView
+  	   	    android:id="@+id/toolbar_selectview_text"
+  	   	    android:clickable="false"
+  	   	    android:layout_width="wrap_content"
+  	   	    android:layout_height="wrap_content"
+  	   	    android:paddingRight="2dp"
+  	   	    android:paddingTop="5dp"
+  	   	    android:textSize="5pt"
+  	   	    android:layout_gravity="center"
+  	   	    android:text="1" />
+ 	   	
+	</FrameLayout>
+
+</LinearLayout>
