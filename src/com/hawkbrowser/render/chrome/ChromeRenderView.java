@@ -71,6 +71,11 @@ public class ChromeRenderView extends RenderView {
     public void reload() {
         mImpl.reload();
     }
+    
+    @Override
+    public String getUrl() {
+    	return mImpl.getUrl();
+    }
 
     @Override
     public void evaluateJavascript(String script, ValueCallback resultCallback) {

@@ -98,17 +98,28 @@ class ChromeRenderObserverAdapter extends WebContentsObserverAndroid implements 
     }
 
     //------------------- WebContentsObserverAndroid methods ----------------
-    public void didStartLoading(String url) {
-
-        for (RenderViewObserver observer : mObservers) {
-            observer.didStartLoading(mRenderView, url);
+    @Override
+    public void didStartProvisionalLoadForFrame(
+            long frameId,
+            long parentFrameId,
+            boolean isMainFrame,
+            String validatedUrl,
+            boolean isErrorPage,
+            boolean isIframeSrcdoc) {
+        
+        if(isMainFrame) {
+            for (RenderViewObserver observer : mObservers) {
+                observer.didStartLoading(mRenderView, validatedUrl);
+            }
         }
     }
-
-    public void didStopLoading(String url) {
-
-        for (RenderViewObserver observer : mObservers) {
-            observer.didStopLoading(mRenderView, url);
+    
+    public void didFinishLoad(long frameId, String validatedUrl, boolean isMainFrame) {
+        
+        if(isMainFrame) {
+            for (RenderViewObserver observer : mObservers) {
+                observer.didFinishLoading(mRenderView, validatedUrl);
+            }
         }
     }
 }

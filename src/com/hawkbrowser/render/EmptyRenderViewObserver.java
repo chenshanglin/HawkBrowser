@@ -12,6 +12,6 @@ public class EmptyRenderViewObserver implements RenderViewObserver {
     public void didStartLoading(RenderView view, String url) { }
 
     @Override
-    public void didStopLoading(RenderView view, String url) { }
+    public void didFinishLoading(RenderView view, String url) { }
     
 }

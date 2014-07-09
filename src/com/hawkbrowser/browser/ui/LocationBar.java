@@ -54,6 +54,9 @@ public class LocationBar extends LinearLayout
             }
 
             mProgressBar.setProgress(progress);
+            
+            if(progress == 100)
+                mProgressBar.setVisibility(View.GONE);
         }
 
         @Override
@@ -67,7 +70,7 @@ public class LocationBar extends LinearLayout
         }
 
         @Override
-        public void didStopLoading(RenderView view, String url) {
+        public void didFinishLoading(RenderView view, String url) {
 
             assert view == renderView();
             mCancelRefresh.setImageResource(R.drawable.locationbar_refresh);

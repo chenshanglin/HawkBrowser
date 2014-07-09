@@ -38,7 +38,7 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
     private SingleRenderViewObserver mRenderViewObserver = new SingleRenderViewObserver() {
 
         @Override
-        public void didStopLoading(RenderView view, String url) {
+        public void didFinishLoading(RenderView view, String url) {
             updateBackForwardStatus(renderView());
         }
     };

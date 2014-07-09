@@ -38,7 +38,7 @@ class SystemRenderObserverAdapter {
         public void onPageFinished(WebView view, String url) {
             
             for (RenderViewObserver observer : mObservers)
-                observer.didStopLoading(mRenderView, url);
+                observer.didFinishLoading(mRenderView, url);
         }
     };
 

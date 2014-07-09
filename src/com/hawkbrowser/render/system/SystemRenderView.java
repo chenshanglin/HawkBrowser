@@ -92,6 +92,11 @@ public class SystemRenderView extends RenderView {
         mWebView.reload();
     }
     
+    @Override
+    public String getUrl() {
+    	return mWebView.getUrl();
+    }
+    
     @SuppressLint("NewApi")
     @Override
     public void evaluateJavascript(String script, ValueCallback resultCallback) {

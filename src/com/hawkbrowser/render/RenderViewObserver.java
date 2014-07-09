@@ -9,5 +9,5 @@ public interface RenderViewObserver {
     
     public void didStartLoading(RenderView view, String url);
 
-    public void didStopLoading(RenderView view, String url);
+    public void didFinishLoading(RenderView view, String url);
 }

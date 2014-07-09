@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RenderView {
+	
+	private boolean mIsDestroyed = false;
     
     public interface ValueCallback {
         void onReceiveValue(String value);
@@ -37,6 +39,8 @@ public abstract class RenderView {
     
     public abstract void blockImage(boolean flag);
     
+    public abstract String getUrl();
+    
     public void addObserver(RenderViewObserver observer) {
         mObservers.add(observer);
     }
@@ -47,5 +51,10 @@ public abstract class RenderView {
     
     public void destroy() {
         mObservers.clear();
+        mIsDestroyed = true;
+    }
+    
+    public boolean isDestroyed() {
+    	return mIsDestroyed;
     }
 }

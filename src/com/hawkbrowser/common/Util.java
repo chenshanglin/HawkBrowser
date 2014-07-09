@@ -1,7 +1,10 @@
 package com.hawkbrowser.common;
 
+import java.io.File;
+
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -28,5 +31,25 @@ public final class Util {
             return new Point(display.getWidth(), display.getHeight());
         }
         
+    }
+    
+    public static File getDataDir(Context context) {
+    	
+    	return context.getFilesDir().getParentFile();
+    }
+    
+    public static void deleteFiles(File outDir) {
+
+		if (outDir.exists()) {
+			File[] files = outDir.listFiles();
+			for (File file : files) {
+				if (!file.delete()) {
+					if (Config.LOG_ENABLED)
+						Log.e(Config.LOG_TAG,
+								"Unable to remove existing resource "
+										+ file.getName());
+				}
+			}
+		}
     }
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.hawkbrowser.R;
 import com.hawkbrowser.browser.BrowserSetting;
 import com.hawkbrowser.browser.HawkBrowserApplication;
+import com.hawkbrowser.browser.adblock.AdblockTabHelper;
 import com.hawkbrowser.common.Config;
 import com.hawkbrowser.common.Constants;
 import com.hawkbrowser.render.EmptyRenderViewObserver;
@@ -38,13 +39,14 @@ public class MainActivity extends Activity implements Toolbar.Observer {
     private RenderViewModel mRenderViewModel;
     private Toolbar mToolbar;
     private LocationBar mLocationBar;
+    private AdblockTabHelper mAdblockHelper;
     private View mNightModeLayer;
 
     private RenderViewObserver mRenderViewObserver = new EmptyRenderViewObserver() {
-       
+
         @Override
-        public void onLoadProgressChanged(RenderView view, int progress) { 
-            
+        public void onLoadProgressChanged(RenderView view, int progress) {
+
             if (progress > 0 && BrowserSetting.get().getNightMode())
                 view.evaluateJavascript(Constants.NIGHT_MODE_JS, null);
         }
@@ -67,7 +69,7 @@ public class MainActivity extends Activity implements Toolbar.Observer {
 
         initUI();
         startRender();
-        
+
         if (BrowserSetting.get().getNightMode())
             processNightModeViews(BrowserSetting.get().getNightMode());
     }
@@ -92,6 +94,8 @@ public class MainActivity extends Activity implements Toolbar.Observer {
     private void startRender() {
 
         mRenderViewModel = new RenderViewModel();
+        mAdblockHelper = new AdblockTabHelper(this);
+        mRenderViewModel.addObserver(mAdblockHelper);
 
         RenderView renderView;
 
@@ -107,7 +111,7 @@ public class MainActivity extends Activity implements Toolbar.Observer {
             renderView = mRenderViewModel.createSystemRenderView(this);
         }
 
-        renderView.blockImage(BrowserSetting.get().getImagelessMode());        
+        renderView.blockImage(BrowserSetting.get().getImagelessMode());
         renderView.addObserver(mRenderViewObserver);
         mRenderViewHolder.setCurrentRenderView(renderView);
 
@@ -193,8 +197,13 @@ public class MainActivity extends Activity implements Toolbar.Observer {
     private void destroyRender() {
 
         if (null != mRenderViewModel) {
+            mRenderViewModel.removeObserver(mAdblockHelper);
             mRenderViewModel.destroy();
             mRenderViewModel = null;
+        }
+
+        if (null != mAdblockHelper) {
+            mAdblockHelper.destroy();
         }
 
         if (null != mContentViewRenderView) {
@@ -256,7 +265,7 @@ public class MainActivity extends Activity implements Toolbar.Observer {
             mLocationBar.enterDayMode();
             mRenderViewModel.enterDayMode();
             mToolbar.enterDayMode();
-        }   
+        }
     }
 
     private void processNightModeLayer(boolean inNightMode) {
@@ -282,12 +291,12 @@ public class MainActivity extends Activity implements Toolbar.Observer {
                 getWindowManager().removeView(mNightModeLayer);
         }
     }
-    
+
     @Override
     public void onImageMode() {
-        
+
         BrowserSetting.get().setImagelessMode(!BrowserSetting.get().getImagelessMode());
-        
+
         mRenderViewModel.setImagelessMode(BrowserSetting.get().getImagelessMode());
     }
 }
