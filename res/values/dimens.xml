@@ -40,5 +40,6 @@
     <dimen name="popup_menubar_btn_width">85.0dip</dimen>
     <dimen name="popup_menubar_btn_height">50.0dip</dimen>
     <dimen name="popup_menubar_height">140dp</dimen>
+    <dimen name="tab_selector_listitem_margin">10dip</dimen>
     
 </resources>

@@ -59,4 +59,5 @@
     <color name="locationbar_progress">#ff33CCFF</color>
     <color name="night_mode_layer_bg">#A0000000</color>
     <color name="night_mode_text_color">#FFDDDDDD</color>
+    <color name="tab_selector_listitem_border">#FF06A72E</color>
 </resources>

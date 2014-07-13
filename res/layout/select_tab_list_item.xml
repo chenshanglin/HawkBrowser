@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tab_selector_listitem_border"
+    android:layout_margin="@dimen/tab_selector_listitem_margin"
+    android:gravity="center_vertical" >
+
+    <LinearLayout
+        android:id="@+id/selectab_listitem_text"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content" 
+    	android:paddingLeft="40dip"
+    	android:paddingRight="35dip"
+    	android:layout_alignParentTop="true"
+    	android:orientation="vertical">
+    	
+	    <TextView
+	        android:id="@+id/selecttab_listitem_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+			android:paddingTop="5dip"
+	        android:text="layouttest"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/selecttab_listitem_url"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+    		android:paddingBottom="5dip"
+	        android:text="layouttest"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	</LinearLayout>
+	
+	<ImageView
+	    android:id="@+id/selectab_listitem_favicon"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@id/selectab_listitem_text"
+	    android:layout_alignParentLeft="true"
+	    android:layout_centerVertical="true"
+	    android:layout_marginLeft="@dimen/tab_selector_listitem_margin"
+	    android:layout_marginRight="@dimen/tab_selector_listitem_margin"
+	    android:src="@drawable/icon_file" />
+    
+    <ImageView
+        android:id="@+id/selecttab_listitem_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignRight="@id/selectab_listitem_text"
+        android:layout_centerVertical="true"
+		android:layout_marginLeft="@dimen/tab_selector_listitem_margin"
+	    android:layout_marginRight="@dimen/tab_selector_listitem_margin"
+        android:src="@drawable/select_tab_current_close" />
+
+</RelativeLayout>

@@ -167,4 +167,6 @@ You are signing in with a managed account and giving its administrator control o
     <string name="chrome_render">Chrome Render</string>
     <string name="day_mode">Day Mode</string>
     <string name="incognito">Incognito browsing</string>
+    <string name="add_tab">Add Tab</string>
+    <string name="close_all_tab">Close All Tab</string>
 </resources>

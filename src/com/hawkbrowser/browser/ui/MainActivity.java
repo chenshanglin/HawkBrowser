@@ -31,7 +31,9 @@ import org.chromium.content.common.ProcessInitException;
 import org.chromium.ui.base.ActivityWindowAndroid;
 import org.chromium.ui.base.WindowAndroid;
 
-public class MainActivity extends Activity implements Toolbar.Observer {
+import java.util.List;
+
+public class MainActivity extends Activity {
 
     private WindowAndroid mWindow;
     private RenderViewHolder mRenderViewHolder;
@@ -82,9 +84,8 @@ public class MainActivity extends Activity implements Toolbar.Observer {
         mRenderViewHolder.addObserver(mLocationBar);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setBrowser(this);
         mRenderViewHolder.addObserver(mToolbar);
-
-        mToolbar.setToolbarObserver(this);
 
         mNightModeLayer = new View(this);
         int nightModeColor = getResources().getColor(R.color.night_mode_layer_bg);
@@ -218,7 +219,6 @@ public class MainActivity extends Activity implements Toolbar.Observer {
         }
     }
 
-    @Override
     public void onExit() {
         new Handler().post(new Runnable() {
 
@@ -229,7 +229,6 @@ public class MainActivity extends Activity implements Toolbar.Observer {
         });
     }
 
-    @Override
     public void onSwitchRender() {
 
         destroyUI();
@@ -244,7 +243,6 @@ public class MainActivity extends Activity implements Toolbar.Observer {
         }
     }
 
-    @Override
     public void onDayNightMode() {
 
         BrowserSetting.get().setNightMode(!BrowserSetting.get().getNightMode());
@@ -292,11 +290,18 @@ public class MainActivity extends Activity implements Toolbar.Observer {
         }
     }
 
-    @Override
     public void onImageMode() {
 
         BrowserSetting.get().setImagelessMode(!BrowserSetting.get().getImagelessMode());
 
         mRenderViewModel.setImagelessMode(BrowserSetting.get().getImagelessMode());
+    }
+    
+    public void onRefresh() {
+        mRenderViewHolder.currentRenderView().reload();
+    }
+    
+    List<RenderView> getRenderViews() {
+        return mRenderViewModel.renderViews();
     }
 }

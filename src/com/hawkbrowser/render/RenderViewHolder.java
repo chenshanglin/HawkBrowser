@@ -41,6 +41,10 @@ public class RenderViewHolder extends FrameLayout {
         
         mCurrentView = view;
     }
+    
+    public final RenderView currentRenderView() {
+        return mCurrentView;
+    }
         
     public void addObserver(RenderViewHolderObserver observer) {
         mObservers.add(observer);

@@ -76,6 +76,11 @@ public class ChromeRenderView extends RenderView {
     public String getUrl() {
     	return mImpl.getUrl();
     }
+    
+    @Override
+    public String getTitle() {
+        return mImpl.getTitle();
+    }
 
     @Override
     public void evaluateJavascript(String script, ValueCallback resultCallback) {

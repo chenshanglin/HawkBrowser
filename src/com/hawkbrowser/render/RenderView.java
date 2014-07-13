@@ -41,6 +41,8 @@ public abstract class RenderView {
     
     public abstract String getUrl();
     
+    public abstract String getTitle();
+    
     public void addObserver(RenderViewObserver observer) {
         mObservers.add(observer);
     }

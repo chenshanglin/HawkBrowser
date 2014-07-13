@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+    
+    <View
+        android:id="@+id/popup_tab_selector_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:background ="@color/semi_transparent"
+        android:layout_weight="1" />
+    
+	<ListView
+        android:id="@+id/popup_tab_selector_list"
+        android:layout_weight="0"
+        android:background="@color/day_mode_bg_default"
+        android:layout_width="match_parent"
+        android:divider="@null"
+        android:padding="15dip"
+        android:layout_height="wrap_content" >
+    </ListView>
+    
+	<Spinner
+  	    android:layout_width="match_parent"
+  	    android:layout_height="0.5dip"
+  	    android:background="@android:color/darker_gray" />
+        
+    <LinearLayout
+        android:id="@+id/popup_tab_selector_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/day_mode_bg_default"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/popup_tab_selector_closeall"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/tab_selector_btn_bg_night"
+            android:text="@string/close_all_tab" />
+        
+		<Spinner
+	  	    android:layout_width="1.0dip"
+	  	    android:layout_height="match_parent"
+	  	    android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/popup_tab_selector_add"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/tab_selector_btn_bg_night"
+            android:text="@string/add_tab" />
+
+    </LinearLayout>
+	
+	<Spinner
+   	    android:layout_width="match_parent"
+   	    android:layout_height="0.5dip"
+   	    android:background="@android:color/black" />
+
+</LinearLayout>

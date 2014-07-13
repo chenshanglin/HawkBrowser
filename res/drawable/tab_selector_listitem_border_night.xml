@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+	<solid android:color="@color/night_mode_bg_default" />  
+  
+    <stroke  
+        android:width="2.0dip"  
+        android:color="@color/tab_selector_listitem_border" />  
+  
+    <!-- 
+    <padding  
+        android:bottom="1dp"  
+        android:left="0.5dp"  
+        android:right="0.5dp"  
+        android:top="0dp" />  
+ 	-->        
+
+</shape>

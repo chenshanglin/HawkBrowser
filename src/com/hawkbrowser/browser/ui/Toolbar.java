@@ -17,23 +17,16 @@ import com.hawkbrowser.render.RenderView;
 import com.hawkbrowser.render.RenderViewHolderObserver;
 import com.hawkbrowser.render.SingleRenderViewObserver;
 
+import java.util.List;
+
 public class Toolbar extends LinearLayout implements View.OnClickListener, RenderViewHolderObserver {
 
     private View mBack;
     private View mForward;
     private long mPrevBackKeyUpTime;
-    private Observer mToolbarObserver;
     private PopupMenuBar mPopupMenuBar;
-
-    public interface Observer {
-        void onExit();
-
-        void onSwitchRender();
-
-        void onDayNightMode();
-        
-        void onImageMode();
-    }
+    private TabSelector mTabSelector;
+    private MainActivity mBrowser;
 
     private SingleRenderViewObserver mRenderViewObserver = new SingleRenderViewObserver() {
 
@@ -43,99 +36,18 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
         }
     };
 
-    private PopupMenuBarObserver mPopupMenuBarObserver = new PopupMenuBarObserver() {
-
-        @Override
-        public void onShowSetting() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onShowDownloadMgr() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onShowBookmark() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onRefresh() {
-            mRenderViewObserver.renderView().reload();
-        }
-
-        @Override
-        public void onExit() {
-            if (null != mToolbarObserver)
-                mToolbarObserver.onExit();
-        }
-
-        @Override
-        public void onAddBookmark() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onShowHistory() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onShowPersonalCenter() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onShare() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onNightMode() {
-            if (null != mToolbarObserver)
-                mToolbarObserver.onDayNightMode();
-        }
-
-        @Override
-        public void onImagelessMode() {
-            if (null != mToolbarObserver)
-                mToolbarObserver.onImageMode();
-        }
-
-        @Override
-        public void onFullScreen() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onShowFileMgr() {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void onSwitchRender() {
-            if (null != mToolbarObserver)
-                mToolbarObserver.onSwitchRender();
-        }
-    };
-
     public Toolbar(Context context) {
         this(context, null);
     }
 
     public Toolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         init();
+    }
+
+    public void setBrowser(MainActivity browser) {
+        mBrowser = browser;
     }
 
     public void enterNightMode() {
@@ -146,8 +58,11 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
         TextView textView = (TextView) findViewById(R.id.toolbar_selectview_text);
         textView.setTextColor(getContext().getResources().getColor(R.color.night_mode_text_color));
 
-        if(null != mPopupMenuBar)
+        if (null != mPopupMenuBar)
             mPopupMenuBar.enterNightMode();
+
+        if (null != mTabSelector)
+            mTabSelector.enterNightMode();
     }
 
     public void enterDayMode() {
@@ -159,6 +74,9 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
         textView.setTextColor(Color.BLACK);
 
         mPopupMenuBar.enterDayMode();
+
+        if (null != mTabSelector)
+            mTabSelector.enterDayMode();
     }
 
     private void init() {
@@ -176,12 +94,16 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
         findViewById(R.id.toolbar_selectview).setOnClickListener(this);
     }
 
-    public void setToolbarObserver(Observer observer) {
-        mToolbarObserver = observer;
-    }
-
     @Override
     public void onClick(View v) {
+
+        if (null != mTabSelector && mTabSelector.isShow() 
+                && (v.getId() != R.id.toolbar_selectview))
+            mTabSelector.dismiss();
+
+        if (null != mPopupMenuBar && mPopupMenuBar.isShow()
+                && (v.getId() != R.id.toolbar_menu))
+            mPopupMenuBar.dismiss();
 
         switch (v.getId()) {
             case R.id.toolbar_back: {
@@ -205,9 +127,45 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
             }
 
             case R.id.toolbar_selectview: {
-                Util.showToDoMessage(getContext());
+                selectTab();
                 break;
             }
+        }
+    }
+
+    private void selectTab() {
+
+        if (null == mTabSelector) {
+            if (null == mRenderViewObserver.renderView())
+                return;
+
+            int progressBarHeight = getContext().getResources().getDimensionPixelSize(
+                    R.dimen.locationbar_progressbar_height);
+
+            View renderView = mRenderViewObserver.renderView().getView();
+            mTabSelector = new TabSelector(getContext(), renderView.getWidth(),
+                    renderView.getHeight() + progressBarHeight);
+
+            if (BrowserSetting.get().getNightMode())
+                mTabSelector.enterNightMode();
+        }
+
+        if (mTabSelector.isShow())
+            mTabSelector.dismiss();
+        else {
+
+            int currentViewIdx = 0;
+            List<RenderView> views = mBrowser.getRenderViews();
+
+            for (int i = 0; i < views.size(); ++i) {
+                if (mRenderViewObserver.renderView() == views.get(i))
+                    currentViewIdx = i;
+            }
+
+            mTabSelector.updateRenderViews(views, currentViewIdx);
+
+            View anchor = findViewById(R.id.toolbar_selectview);
+            mTabSelector.show(anchor);
         }
     }
 
@@ -222,10 +180,9 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
 
             View renderView = mRenderViewObserver.renderView().getView();
             mPopupMenuBar = new PopupMenuBar(getContext(), renderView.getWidth(),
-                    renderView.getHeight() + progressBarHeight,
-                    mPopupMenuBarObserver);
-            
-            if(BrowserSetting.get().getNightMode())
+                    renderView.getHeight() + progressBarHeight, mBrowser);
+
+            if (BrowserSetting.get().getNightMode())
                 mPopupMenuBar.enterNightMode();
         }
 
@@ -271,6 +228,16 @@ public class Toolbar extends LinearLayout implements View.OnClickListener, Rende
     }
 
     public void destroy() {
-        mToolbarObserver = null;
+        mBrowser = null;
+
+        if (null != mPopupMenuBar) {
+            mPopupMenuBar.destroy();
+            mPopupMenuBar = null;
+        }
+
+        if (null != mTabSelector) {
+            mTabSelector.destroy();
+            mTabSelector = null;
+        }
     }
 }

@@ -97,6 +97,11 @@ public class SystemRenderView extends RenderView {
     	return mWebView.getUrl();
     }
     
+    @Override
+    public String getTitle() {
+        return mWebView.getTitle();
+    }
+    
     @SuppressLint("NewApi")
     @Override
     public void evaluateJavascript(String script, ValueCallback resultCallback) {

@@ -682,4 +682,6 @@
     <string name="chrome_render">Chrome 内核</string>
     <string name="day_mode">白天模式</string>
     <string name="incognito">无痕浏览</string>
+    <string name="add_tab">新建标签</string>
+    <string name="close_all_tab">关闭全部</string>
 </resources>

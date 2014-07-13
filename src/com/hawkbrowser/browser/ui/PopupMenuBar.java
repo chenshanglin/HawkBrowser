@@ -17,6 +17,7 @@ import android.widget.ViewFlipper;
 
 import com.hawkbrowser.R;
 import com.hawkbrowser.browser.BrowserSetting;
+import com.hawkbrowser.common.Util;
 
 public class PopupMenuBar implements View.OnClickListener,
         GestureDetector.OnGestureListener, View.OnTouchListener {
@@ -31,17 +32,13 @@ public class PopupMenuBar implements View.OnClickListener,
     private Button mImageModeBtn;
     private long mAnimationDuration;
     private PopupWindow mPopup;
-    private PopupMenuBarObserver mObserver;
     private GestureDetector mGestureDetector;
     private int mWidth;
     private int mHeight;
+    private MainActivity mBrowser;
 
-    public PopupMenuBar(Context context, int width, int height) {
-        this(context, width, height, null);
-    }
-
-    public PopupMenuBar(Context context, int width, int height, PopupMenuBarObserver observer) {
-        mObserver = observer;
+    public PopupMenuBar(Context context, int width, int height, MainActivity browser) {
+        mBrowser = browser;
         mWidth = width;
         mHeight = height;
 
@@ -155,78 +152,53 @@ public class PopupMenuBar implements View.OnClickListener,
 
         dismiss();
 
-        if (null == mObserver)
+        if (null == mBrowser)
             return;
 
         switch (v.getId()) {
-            case R.id.popup_menubar_addbookmark: {
-                mObserver.onAddBookmark();
-                break;
-            }
+            case R.id.popup_menubar_addbookmark: 
 
-            case R.id.popup_menubar_bookmark: {
-                mObserver.onShowBookmark();
-                break;
-            }
+            case R.id.popup_menubar_bookmark: 
 
-            case R.id.popup_menubar_history: {
-                mObserver.onShowHistory();
-                break;
-            }
+            case R.id.popup_menubar_history: 
+            
+            case R.id.popup_menubar_fullscreen:
+                
+            case R.id.popup_menubar_file: 
+                
+            case R.id.popup_menubar_personalcenter: 
+                
+            case R.id.popup_menubar_download: 
 
-            case R.id.popup_menubar_refresh: {
-                mObserver.onRefresh();
+            case R.id.popup_menubar_share: 
+                
+            case R.id.popup_menubar_setting: 
+                Util.showToDoMessage(mView.getContext());
                 break;
-            }
-
-            case R.id.popup_menubar_personalcenter: {
-                mObserver.onShowPersonalCenter();
-                break;
-            }
-
-            case R.id.popup_menubar_download: {
-                mObserver.onShowDownloadMgr();
-                break;
-            }
-
-            case R.id.popup_menubar_share: {
-                mObserver.onShare();
-                break;
-            }
-
+                
             case R.id.popup_menubar_exit: {
-                mObserver.onExit();
-                break;
-            }
-
-            case R.id.popup_menubar_setting: {
-                mObserver.onShowSetting();
-                break;
+                mBrowser.onExit();
+                return;
             }
 
             case R.id.popup_menubar_nightmode: {
-                mObserver.onNightMode();
-                break;
+                mBrowser.onDayNightMode();
+                return;
             }
 
             case R.id.popup_menubar_noimage: {
-                mObserver.onImagelessMode();
-                break;
+                mBrowser.onImageMode();
+                return;
             }
 
-            case R.id.popup_menubar_fullscreen: {
-                mObserver.onFullScreen();
-                break;
+            case R.id.popup_menubar_refresh: {
+                mBrowser.onRefresh();
+                return;
             }
-
-            case R.id.popup_menubar_file: {
-                mObserver.onShowFileMgr();
-                break;
-            }
-
+            
             case R.id.popup_menubar_render: {
-                mObserver.onSwitchRender();
-                break;
+                mBrowser.onSwitchRender();
+                return;
             }
         }
     }
@@ -261,6 +233,10 @@ public class PopupMenuBar implements View.OnClickListener,
             mPopup.dismiss();
             mPopup = null;
         }
+    }
+    
+    public void destroy() {
+        mBrowser = null;
     }
 
     //---------------- GestureDetector.OnGestureListener -------------------

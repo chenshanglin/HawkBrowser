@@ -10,6 +10,7 @@ import org.chromium.chrome.hawkbrowser.HawkBrowserTab;
 import org.chromium.ui.base.WindowAndroid;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RenderViewModel {
     
@@ -91,5 +92,9 @@ public class RenderViewModel {
     
     public void removeObserver(Observer observer) {
     	mObservers.remove(observer);
+    }
+    
+    public List<RenderView> renderViews() {
+        return mRenderViews;
     }
 }
